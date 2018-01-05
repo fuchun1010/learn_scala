@@ -1,2 +1,9 @@
 *.class
 *.log
+<<<<<<< HEAD
+=======
+.idea/
+project/
+build.sbt
+target/
+>>>>>>> Initial commit
