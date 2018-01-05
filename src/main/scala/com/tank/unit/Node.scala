@@ -1,9 +1,11 @@
 package com.tank.unit
-import   scala.collection.mutable.ListBuffer
-class Node(data: Option[String],
-           id: String,
-           desc: String,
-           children: Option[ListBuffer[Node]]) {
+
+import scala.collection.mutable.ListBuffer
+
+case class Node(data: Option[String],
+                id: String,
+                desc: String,
+                children: Option[ListBuffer[Node]]) {
 
   def isParent: Boolean = data.isEmpty
 
@@ -13,28 +15,32 @@ class Node(data: Option[String],
   }
 
   def display(): Unit = {
-
-    def disPlay(node: Node): Unit = {
-      node.isParent match {
-        case false => println(node)
-        case _ => ()
-      }
-    }
-
-    this.children match {
-      case Some(list) => {
-        println(this)
-        list.toList.foreach(disPlay(_))
-      }
-      case _ =>
-    }
-
-    disPlay(this)
   }
 
-  def find(id:String):Node = {
+  def find(id: String): Node = {
 
-    return null
+    def find(nodes: List[Node], id: String): Node = {
+      nodes match {
+        case h :: t => {
+          if (h.id.equals(id)) {
+            h
+          }
+          else {
+            val rs = find(t, id)
+            if(rs != null) rs else null
+          }
+        }
+        case _ => null
+      }
+    }
+    if(this.id.equals(id)) {
+      this
+    }
+    else {
+      val  list =this.children.getOrElse(new ListBuffer[Node]).toList
+       find(list, id)
+    }
+
   }
 
   override def toString: String = {
