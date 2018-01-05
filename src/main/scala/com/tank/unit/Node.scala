@@ -1,11 +1,9 @@
 package com.tank.unit
-
-import scala.collection.mutable.ArrayBuffer
-
+import   scala.collection.mutable.ListBuffer
 class Node(data: Option[String],
            id: String,
            desc: String,
-           children: Option[ArrayBuffer[Node]]) {
+           children: Option[ListBuffer[Node]]) {
 
   def isParent: Boolean = data.isEmpty
 
@@ -24,9 +22,9 @@ class Node(data: Option[String],
     }
 
     this.children match {
-      case Some(arrayBuffer) => {
+      case Some(list) => {
         println(this)
-        arrayBuffer.toArray.foreach(disPlay(_))
+        list.toList.foreach(disPlay(_))
       }
       case _ =>
     }
@@ -54,7 +52,7 @@ class Node(data: Option[String],
 
 object Node {
   def apply(id: String, desc: String) = new Node(Option.empty,
-    id, desc, Option(new ArrayBuffer[Node]()))
+    id, desc, Option(ListBuffer[Node]()))
 
   def apply(data: String,
             id: String,
