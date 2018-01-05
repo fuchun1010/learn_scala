@@ -32,6 +32,11 @@ class Node(data: Option[String],
     disPlay(this)
   }
 
+  def find(id:String):Node = {
+
+    return null
+  }
+
   override def toString: String = {
     val sb = new StringBuilder
     if (this.isParent) {
