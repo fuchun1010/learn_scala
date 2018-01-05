@@ -15,6 +15,7 @@ case class Node(data: Option[String],
   }
 
   def display(): Unit = {
+    
   }
 
   def find(id: String): Node = {
@@ -27,18 +28,19 @@ case class Node(data: Option[String],
           }
           else {
             val rs = find(t, id)
-            if(rs != null) rs else null
+            if (rs != null) rs else null
           }
         }
-        case _ => null
+        case Nil => null
       }
     }
-    if(this.id.equals(id)) {
+
+    if (this.id.equals(id)) {
       this
     }
     else {
-      val  list =this.children.getOrElse(new ListBuffer[Node]).toList
-       find(list, id)
+      val list = this.children.getOrElse(new ListBuffer[Node]).toList
+      find(list, id)
     }
 
   }
