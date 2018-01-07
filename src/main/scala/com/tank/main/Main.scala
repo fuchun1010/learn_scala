@@ -20,7 +20,7 @@ object Main extends App {
   p1.addChildren(c2)
   p1.display()
   val node = p1.find("2")
-  println(node)
+  println(node) 
 
 
 }
