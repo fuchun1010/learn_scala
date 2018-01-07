@@ -3,9 +3,9 @@ package com.tank.unit
 import scala.collection.mutable.ListBuffer
 
 case class Node[T](data: Option[T],
-                id: String,
-                desc: String,
-                children: Option[ListBuffer[Node[T]]]) {
+                   id: String,
+                   desc: String,
+                   children: Option[ListBuffer[Node[T]]]) {
 
   def isParent: Boolean = data.isEmpty
 
@@ -16,6 +16,28 @@ case class Node[T](data: Option[T],
 
   def display(): Unit = {
 
+    def display(list: List[Node[T]]): Unit = {
+      list match {
+        case h :: t => {
+          println(h.toString)
+          if (h.isParent) {
+            h.children match {
+              case Some(nodes) => display(nodes.toList)
+              case _ => ()
+            }
+          }
+          display(t)
+        }
+        case _ => ()
+      }
+
+    }
+
+    println(this.toString)
+    this.children match {
+      case Some(nodes) => display(nodes.toList)
+      case _ =>
+    }
   }
 
   def find(id: String): Node[T] = {
@@ -68,6 +90,6 @@ object Node {
     id, desc, Option(ListBuffer[Node[T]]()))
 
   def apply[T](data: T,
-            id: String,
-            desc: String) = new Node(Option(data), id, desc, Option.empty)
+               id: String,
+               desc: String) = new Node(Option(data), id, desc, Option.empty)
 }
