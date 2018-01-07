@@ -2,25 +2,25 @@ package com.tank.unit
 
 import scala.collection.mutable.ListBuffer
 
-case class Node(data: Option[String],
+case class Node[T](data: Option[T],
                 id: String,
                 desc: String,
-                children: Option[ListBuffer[Node]]) {
+                children: Option[ListBuffer[Node[T]]]) {
 
   def isParent: Boolean = data.isEmpty
 
-  def addChildren(node: Node): Unit = children match {
+  def addChildren(node: Node[T]): Unit = children match {
     case Some(children) => children += node
     case _ => throw new Exception("not parent node")
   }
 
   def display(): Unit = {
-    
+
   }
 
-  def find(id: String): Node = {
+  def find(id: String): Node[T] = {
 
-    def find(nodes: List[Node], id: String): Node = {
+    def find(nodes: List[Node[T]], id: String): Node[T] = {
       nodes match {
         case h :: t => {
           if (h.id.equals(id)) {
@@ -39,7 +39,7 @@ case class Node(data: Option[String],
       this
     }
     else {
-      val list = this.children.getOrElse(new ListBuffer[Node]).toList
+      val list = this.children.getOrElse(new ListBuffer[Node[T]]).toList
       find(list, id)
     }
 
@@ -64,10 +64,10 @@ case class Node(data: Option[String],
 }
 
 object Node {
-  def apply(id: String, desc: String) = new Node(Option.empty,
-    id, desc, Option(ListBuffer[Node]()))
+  def apply[T](id: String, desc: String) = new Node(Option.empty,
+    id, desc, Option(ListBuffer[Node[T]]()))
 
-  def apply(data: String,
+  def apply[T](data: T,
             id: String,
             desc: String) = new Node(Option(data), id, desc, Option.empty)
 }
